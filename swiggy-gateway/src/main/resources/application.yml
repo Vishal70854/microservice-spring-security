@@ -1,0 +1,40 @@
+# understand it as : if any request comes to /swiggy/** then route the request to SWIGGY-APP which is our application name registered in eureka server
+# if any request comes to /restaurant/** then route the request to RESTAURANT-SERVICE which is our application name registered in eureka server
+## ---------------------------above statements are just comments --------------------------------
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: swiggy-app
+          uri: lb://SWIGGY-APP
+          predicates:
+            - Path=/swiggy/**
+          filters:
+            - AuthenticationFilter
+
+
+        - id: restaurant-service
+          uri: lb://RESTAURANT-SERVICE
+          predicates:
+            - Path=/restaurant/**
+          filters:
+            - AuthenticationFilter
+
+        - id: identity-service
+          uri: lb://IDENTITY-SERVICE
+          predicates:
+            - Path=/auth/**
+
+  application:
+    name: SWIGGY-GATEWAY
+# eureka service registry configuration
+eureka:
+  client:
+    service-url:
+      defaultZone : http://localhost:8761/eureka/
+
+# we are defining default port of 8080 to our swiggy-gateway application for understanding purpose
+
+server:
+  port: 8080
