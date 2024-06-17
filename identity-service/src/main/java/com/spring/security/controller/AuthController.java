@@ -52,6 +52,7 @@ public class AuthController {
         else{
             throw new RuntimeException("Invalid Access");
         }
+        
     }
 
     // endpoint to validate a jwt token
