@@ -8,12 +8,11 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity // the @EnableWebSecurity annotation is a powerful tool that enables developers to configure Spring Security for a web application.
@@ -33,7 +32,7 @@ public class AuthConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-                .csrf(csrf -> csrf.disable())   // disable csrf
+                .csrf(AbstractHttpConfigurer::disable)   // disable csrf
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/auth/register", "/auth/token", "/auth/validate").permitAll()   // permit all http requests with /products/welcome, /products/new, /products/authenticate
                         .anyRequest().authenticated()   // authenticate all other requests apart from /products/welcome, /products/new, /products/authenticate
@@ -67,7 +66,4 @@ public class AuthConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
-
-
-
 }

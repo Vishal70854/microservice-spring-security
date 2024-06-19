@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 
+
 public class CustomUserDetails implements UserDetails {
 
     private String username;
@@ -56,3 +57,4 @@ public class CustomUserDetails implements UserDetails {
 //        return UserDetails.super.isEnabled();
     }
 }
+

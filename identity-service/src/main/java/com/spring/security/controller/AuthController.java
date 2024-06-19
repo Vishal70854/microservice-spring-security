@@ -32,6 +32,7 @@ public class AuthController {
     }
 
     // endpoint to get a jwt token
+
     @PostMapping("/token")
     public String getToken(@RequestBody AuthRequest authRequest){
 
@@ -52,8 +53,8 @@ public class AuthController {
         else{
             throw new RuntimeException("Invalid Access");
         }
-        
     }
+
 
     // endpoint to validate a jwt token
     // we will give the jwt token in request parameter in the url while calling validateToken endpoint

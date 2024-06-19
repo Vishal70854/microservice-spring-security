@@ -15,7 +15,7 @@ import java.util.Map;
 @Component    // this JwtService class is used to create and validate jwt token using Jwts.parserBuilder()
 public class JwtService {
     // 256 bit encrypted key generated to create and validate jwt token
-    private static final String SECRET = "aa10ba07d9d14a9f94c02a95274b7a380565596421af147f0136caee8dd12f09";
+    private static final String SECRET = "5b11fd539f9c45ed8a8bc52951d4d1981b108ef6ca92dea6019ee22a35066b62";
 
     // method to validate the token
     public void validateToken(final String token) {
