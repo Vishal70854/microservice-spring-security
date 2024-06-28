@@ -44,15 +44,14 @@ public class AuthController {
         // and send the user details to AuthenticationManager for validation.
         // create a bean of CustomUserDetailsService which implements UserDetailsService interface to talk to db and validate user.
 
-        Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        authRequest.getUsername(),
+                        authRequest.getPassword())
+        );
 
-        // check if authentication is successful then only generate jwt token for that user
-        if(authenticate.isAuthenticated()){
-            return service.generateToken(authRequest.getUsername());
-        }
-        else{
-            throw new RuntimeException("Invalid Access");
-        }
+        return service.generateToken(authRequest.getUsername());
+
     }
 
 

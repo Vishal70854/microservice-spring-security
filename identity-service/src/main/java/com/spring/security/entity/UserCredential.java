@@ -8,8 +8,8 @@ import lombok.*;
 
 @Entity
 @Data
-@Getter
-@Setter
+//@Getter
+//@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserCredential {

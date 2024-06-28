@@ -5,10 +5,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -34,9 +36,13 @@ public class AuthConfig {
         return http
                 .csrf(AbstractHttpConfigurer::disable)   // disable csrf
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/auth/register", "/auth/token", "/auth/validate").permitAll()   // permit all http requests with /products/welcome, /products/new, /products/authenticate
+                        .requestMatchers("/auth/**").permitAll()
+                        //.requestMatchers("/auth/register", "/auth/getToken", "/auth/validate").permitAll()   // permit all http requests with /products/welcome, /products/new, /products/authenticate
                         .anyRequest().authenticated()   // authenticate all other requests apart from /products/welcome, /products/new, /products/authenticate
                 )
+                .sessionManagement((session) -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authenticationProvider(authenticationProvider())
                 .build();
     }
 

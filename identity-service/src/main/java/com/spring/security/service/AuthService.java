@@ -3,6 +3,7 @@ package com.spring.security.service;
 import com.spring.security.entity.UserCredential;
 import com.spring.security.repository.UserCredentialRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +32,14 @@ public class AuthService {
 
     // method to generate a jwt token for each user
     public String generateToken(String username){
-        return jwtService.generateToken(username);
+        // check if user exists in database
+        var user = repository.findByName(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Username not found in db to generate token : " +username));
+
+        // generate the jwt token from jwtService
+        var jwtToken = jwtService.generateToken(username);
+
+        return jwtToken;     // return the jwt token in the form of String
     }
 
     // method to validate a jwt token
